@@ -27,29 +27,34 @@ public class DataValidator {
         }
 
         // If length is not 10 or character at i = 6 is '-', return false.
-        if (cpr.length() != 10 || cpr.charAt(6) == '-') {
-            return false;
-        }
-
         // If string contains anything other than numbers, return false.
-        else if (cprSubstring.matches("[^0-9]")) {
-            return false;
-        }
-
-        else {
-            return true;
-        }
+        return cpr.length() == 10 && cpr.charAt(6) != '-' && !cprSubstring.matches("[^0-9]");
     }
 
-    public boolean isValidName (String name) {
-        if (name.length() < 2 || name.length() > 155) {
-            return false;
-        }
-        return true;
+    public boolean isValidFirstName (String firstName) {
+        return firstName.length() >= 2 && firstName.length() <= 155;
     }
 
+    public boolean isValidLastName (String lastName) {
+        return lastName.length() >= 2 && lastName.length() <= 155;
+    }
 
-    public boolean isValidAddress (String address) {
-        return false;
+    public boolean isValidPhoneNumber (String phoneNumber) {
+        return phoneNumber.length() == 10 && phoneNumber.charAt(0) == '+' && !phoneNumber.substring(1).matches("[^0-9]");
+    }
+
+    public boolean isValidMail (String mail) {
+        return mail.length() >= 5 && mail.contains("@" + ".");
+    }
+
+    public boolean isValidConsent (String consent) {
+        return consent.equals("yes") || consent.equals("no");
+    }
+
+    public boolean isValidClinic (String clinic) {
+        return clinic.length() == 6 && !clinic.matches("[^0-9]");
+
+    //public boolean isValidAddress (String address) {
+        //return false;
 
     }}

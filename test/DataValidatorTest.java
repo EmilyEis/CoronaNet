@@ -42,4 +42,7 @@ class DataValidatorTest {
         boolean result = dv.isValidCPR(input);
         Assertions.assertTrue(result);
     }
+
+    // missing tests: firstName, lastName, phone, mail, consent, clinic
+
 }
