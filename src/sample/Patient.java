@@ -15,10 +15,6 @@ public class Patient {
     private String consent;
     private int clinic;
 
-    public static void main(String args[]) {
-        System.out.println(Character.isDigit('+'));
-        System.out.println(Character.isDigit('5'));}
-
     // Registering patient with valid CPR
     public Patient(String inputFirstName, String inputLastName, String inputCPR, String inputPhone, String inputMail) {
         this.firstName = inputFirstName;

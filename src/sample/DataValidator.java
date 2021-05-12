@@ -28,7 +28,7 @@ public class DataValidator {
 
         // If length is not 10 or character at i = 6 is '-', return false.
         // If string contains anything other than numbers, return false.
-        return cpr.length() == 10 && cpr.charAt(6) != '-' && !cprSubstring.matches("[^0-9]");
+        return cpr.length() == 10 && cpr.charAt(6) != '-' && cprSubstring.matches("\\d+");
     }
 
     public boolean isValidFirstName (String firstName) {
@@ -40,11 +40,11 @@ public class DataValidator {
     }
 
     public boolean isValidPhoneNumber (String phoneNumber) {
-        return phoneNumber.length() == 10 && phoneNumber.charAt(0) == '+' && !phoneNumber.substring(1).matches("[^0-9]");
+        return phoneNumber.length() == 11 && (phoneNumber.startsWith("+") || phoneNumber.startsWith("00")) && phoneNumber.substring(1).matches("\\d+");
     }
 
     public boolean isValidMail (String mail) {
-        return mail.length() >= 5 && mail.contains("@" + ".");
+        return mail.length() >= 5 && mail.contains("@") && mail.contains(".");
     }
 
     public boolean isValidConsent (String consent) {
