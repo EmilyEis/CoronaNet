@@ -1,36 +1,39 @@
 package sample;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class PatientRegister {
 
-    public static void dbConPatient() {
+    public static Patient dbConPatient(String inputCPR) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
 
-        String query = "SELECT * FROM CoronaNet.Patient";
+        String query = "SELECT * FROM CoronaNet.Patient WHERE CPR = " + "'" + inputCPR + "'";
+        Patient currentPatient = null;
 
         try (Connection con = DriverManager.getConnection(url, null, password);
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
-                int CPR = rs.getInt(1);
+                String CPR = rs.getString(1);
                 String firstName = rs.getString(2);
                 String lastName = rs.getString(3);
                 String mail = rs.getString(4);
-                String phone = rs.getString(5);
+                String phoneNumber = rs.getString(5);
                 String consent = rs.getString(6);
-                int clinic = rs.getInt(7);
-                System.out.println("| CPR: " + CPR + " | Name: " + firstName + " " + lastName +
-                        " | Consent given (yes/no): " + consent + " | Clinic no.: " + clinic + " |");
+                String clinic = rs.getString(7);
+
+                currentPatient = new Patient(CPR, firstName, lastName, mail, phoneNumber, consent, clinic);
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+
+        return currentPatient;
     }
 
+}
 
 
 
@@ -42,7 +45,8 @@ public class PatientRegister {
 
 
 
-    // Array to hold registered patients
+
+ /*   // Array to hold registered patients
     public ArrayList<Patient> patientList;
 
     // Constructor
@@ -83,3 +87,4 @@ public class PatientRegister {
 
     }
 }
+*/

@@ -7,12 +7,17 @@ public class HP {
     private String clinic;
     private String user;
 
+    public HP (String inputClinic, String inputUser) {
+        this.clinic = inputClinic;
+        this.user = inputUser;
+    }
+
     public String getClinic() {
         return clinic;
     }
 
     public void setClinic(String newClinic) {
-        this.clinic = clinic;
+        this.clinic = newClinic;
     }
 
     public String getUser() {
@@ -20,7 +25,7 @@ public class HP {
     }
 
     public void setUser(String newUser) {
-        this.user = user;
+        this.user = newUser;
     }
 
 

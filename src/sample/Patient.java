@@ -7,21 +7,24 @@ import java.time.format.DateTimeFormatter;
 public class Patient {
 
     // Creating fields/attributes for name/cpr
+    private String CPR;
     private String firstName;
     private String lastName;
-    private String CPR;
-    private String phoneNumber;
     private String mail;
+    private String phoneNumber;
     private String consent;
-    private int clinic;
+    private String clinic;
 
     // Registering patient with valid CPR
-    public Patient(String inputFirstName, String inputLastName, String inputCPR, String inputPhone, String inputMail) {
+    public Patient(String inputCPR, String inputFirstName, String inputLastName, String inputMail, String inputPhone,
+                   String inputConsent, String inputClinic) {
+        this.CPR = inputCPR;
         this.firstName = inputFirstName;
         this.lastName = inputLastName;
-        this.CPR = inputCPR;
-        this.phoneNumber = inputPhone;
         this.mail = inputMail;
+        this.phoneNumber = inputPhone;
+        this.consent = inputConsent;
+        this.clinic = inputClinic;
     }
 
     // Getters and setters for first name, last name, cpr, phone number and mail
@@ -61,10 +64,20 @@ public class Patient {
     }
 
     public void setMail(String newMail) {
-
         mail = newMail;
     }
 
+    public String getConsent() {
+        return consent;
+    }
+
+    public void setConsent(String newConsent) {
+        consent = newConsent;
+    }
+
+    public String getClinic() {
+        return clinic;
+    }
 
     // Calculate age
     public int getAge () {
@@ -77,7 +90,6 @@ public class Patient {
         int age = Period.between(birthdate, today).getYears();
         return age;
     }
-
 
     // If the last number in CPR is even, the person's female. Otherwise he's male.
     public String getGender() {
