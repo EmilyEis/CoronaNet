@@ -13,7 +13,7 @@ public class Controller {
     @FXML private TextField CPR;
 
     public void searchButtonClicked() {
-        Patient searchResultPatient = PatientRegister.dbConPatient(CPR.getText());
+        Patient searchResultPatient = PatientRegister.dbConFindPatient(CPR.getText());
         viewPatientInfo.setText("CPR: " + searchResultPatient.getCPR() + "\n" + "Name: " +
                 searchResultPatient.getFirstName() + " " + searchResultPatient.getLastName() + "\n" + "Mail: "
                 + searchResultPatient.getMail() + "\n" + "Phone: " + searchResultPatient.getPhoneNumber() + "\n" +

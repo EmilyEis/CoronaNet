@@ -11,13 +11,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Healthcare.fxml"));
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Logged in as healthcare");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) {
+
         launch(args);
+
     }
 }

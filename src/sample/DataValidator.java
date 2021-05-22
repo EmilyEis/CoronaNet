@@ -1,4 +1,5 @@
 package sample;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -48,7 +49,7 @@ public class DataValidator {
     }
 
     public boolean isValidConsent (String consent) {
-        return consent.equals("yes") || consent.equals("no");
+        return consent.equals("Yes") || consent.equals("No");
     }
 
     public boolean isValidClinic (String clinic) {
@@ -57,4 +58,4 @@ public class DataValidator {
     //public boolean isValidAddress (String address) {
         //return false;
 
-    }}
+    }

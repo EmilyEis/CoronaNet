@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Assertions;
-import sample.DataValidator;
+import sample.*;
 
 class DataValidatorTest {
 
@@ -116,7 +116,7 @@ class DataValidatorTest {
     @org.junit.jupiter.api.Test
     void isValidLastConsentValid() {
         DataValidator dv = new DataValidator();
-        String input = "yes";
+        String input = "Yes";
         boolean result = dv.isValidConsent(input);
         Assertions.assertTrue(result);
     }
@@ -151,4 +151,64 @@ class DataValidatorTest {
         Assertions.assertFalse(result2);
     }
 
+    @org.junit.jupiter.api.Test
+    void isValidPatientValid() {
+        DataValidator dv = new DataValidator();
+        String cpr = "1234567899";
+        String firstName = "John";
+        String lastName = "Doe";
+        String phone = "";
+        String mail = "";
+        String consent = "No";
+        String clinic = "00000";
+
+        Patient input = new Patient(cpr, firstName, lastName, phone, mail, consent, clinic);
+        boolean result = dv.isValidPatient(input);
+        Assertions.assertTrue(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    void isValidPatientNotValid() {
+        DataValidator dv = new DataValidator();
+        String cpr = null;
+        String firstName = "John";
+        String lastName = "Doe";
+        String phone = null;
+        String mail = null;
+        String consent = "No";
+        String clinic = "00000";
+
+        Patient input = new Patient(cpr, firstName, lastName, phone, mail, consent, clinic);
+        boolean result = dv.isValidPatient(input);
+        Assertions.assertFalse(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    void isValidKnownPatientValid() {
+        DataValidator dv = new DataValidator();
+        Patient input = PatientRegister.dbConFindPatient("1234567890");
+
+        boolean result = dv.isValidKnownPatient(input);
+        Assertions.assertTrue(result);
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void isValidKnownPatientNotValid() {
+        DataValidator dv = new DataValidator();
+        Patient input = PatientRegister.dbConFindPatient("1234567891");
+
+        boolean result = dv.isValidKnownPatient(input);
+        Assertions.assertFalse(result);
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void isValidKnownTestValid() {
+        DataValidator dv = new DataValidator();
+        Test input = TestRegister.dbConTest("1234567890");
+
+        boolean result = dv.isValidKnownTest(input);
+        Assertions.assertTrue(result);
+    }
 }
