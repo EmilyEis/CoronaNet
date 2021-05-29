@@ -17,9 +17,15 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        Patient testPatient = new Patient("1234567897", "Janet", "Doe",
+                null, null, "yes", "12345");
+        // PatientRegister.addPatient(testPatient);
+        PatientRegister.removePatient(testPatient);
+         //System.out.println((PatientRegister.findPatient(testPatient).getFirstName()));
+        //PatientRegister.findPatient(testPatient);
 
-        launch(args);
+        //launch(args);
 
     }
 }

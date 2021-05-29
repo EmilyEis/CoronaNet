@@ -24,6 +24,8 @@ public class PatientRegister {
                 String clinic = rs.getString(7);
 
                 currentPatient = new Patient(CPR, firstName, lastName, mail, phoneNumber, consent, clinic);
+                //System.out.println(currentPatient.getCPR()+currentPatient.getFirstName()+currentPatient.getLastName()+
+                //        currentPatient.getPhoneNumber()+currentPatient.getMail()+currentPatient.getConsent()+currentPatient.getClinic());
             }
 
         } catch (SQLException ex) {
@@ -33,79 +35,131 @@ public class PatientRegister {
         return currentPatient;
     }
 
-    public static void dbConAddPatient(Patient newPatient) {
+
+
+    private static void dbConAddPatient(Patient newPatient) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
 
-        String query = "INSERT INTO CoronaNet.Patient (CPR, firstName, lastName, mail, phone, consent, clinic) VALUES ("
-                + newPatient.getCPR() + "," + newPatient.getFirstName() + "," + newPatient.getLastName() + "," +
-                newPatient.getMail() + "," + newPatient.getPhoneNumber() + "," + newPatient.getConsent() + "," +
-                newPatient.getClinic() + ")";
+        String update = "INSERT INTO CoronaNet.Patient (CPR, firstName, lastName, mail, phone, consent, clinic) VALUES ("
+                + "'" + newPatient.getCPR() + "','" + newPatient.getFirstName() + "','" + newPatient.getLastName() + "','" +
+                newPatient.getMail() + "','" + newPatient.getPhoneNumber() + "','" + newPatient.getConsent() + "','" +
+                newPatient.getClinic() + "')";
 
-        try (Connection con = DriverManager.getConnection(url, null, password);
+        try (Connection con = DriverManager.getConnection(url, null, password)) {
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) {
-
-        }
+             st.executeUpdate(update);
+             System.out.println("Patient successfully added.");
+    }
 
         catch (SQLException ex) {
-            System.out.println(ex.getMessage());;
+            System.out.println(ex.getMessage());
+        }
+    }
+
+
+
+    private static void dbConRemovePatient(Patient inputPatient) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
+        String update = "DELETE FROM CoronaNet.Patient WHERE CPR = " + "'" + inputPatient.getCPR() + "'";
+
+        try (Connection con = DriverManager.getConnection(url, null, password)) {
+            Statement st = con.createStatement();
+            st.executeUpdate(update);
+
+            System.out.println("Patient successfully removed.");
+        }
+
+        catch(SQLException ex){
+                System.out.println(ex.getMessage());
+            }
+        }
+
+
+
+    private static void dbConModifyPatient(String inputCPR, Patient inputPatient) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
+
+        String query = "UPDATE CoronaNet.Patient SET CPR = " + "'" + inputPatient.getCPR() + "'" + ", firstName = " +
+                "'" + inputPatient.getFirstName() + "'" + ", lastName = " + "'" + inputPatient.getLastName() + "'"
+                + ", mail = " + "'" + inputPatient.getMail() + "'" + ", phone = " + "'" + inputPatient.getPhoneNumber()
+                + "'" + ", consent = " + "'" + inputPatient.getConsent() + "'" + ", clinic = " + "'" +
+                inputPatient.getClinic() + "'" + " WHERE CPR = " + "'" + inputCPR + "'";
+
+        try (Connection con = DriverManager.getConnection(url, null, password)) {
+            Statement st = con.createStatement();
+            int rs = st.executeUpdate(query);
+            System.out.println(rs);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
 
 
 
-    public static void dbConRemovePatient(Patient inputPatient) {
-        String url = "jdbc:mysql://127.0.0.1:/?user=root";
-        String password = "1234";
 
-        String query = "DELETE FROM CoronaNet.Patient WHERE CPR = " + inputPatient.getCPR();
 
-        try (Connection con = DriverManager.getConnection(url, null, password);
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) {
-        }
+    public static Patient findPatient(Patient currentPatient) {
 
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());;
+        if (currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+            System.out.println("got here.");
+            return dbConFindPatient(currentPatient.getCPR());
+
+        } else {
+            System.out.println("No patient found.");
+            return null;
         }
     }
 
 
     // Method for checking if the patient already exists in the register
-    public void addPatient (Patient currentPatient) throws Exception {
-        // If current patient does not exist in the list 'patients' add patient to the list
-
-        if (currentPatient != dbConFindPatient(currentPatient.getCPR())) {
+    public static void addPatient(Patient currentPatient) {
+        // If current patient does not exist in the database 'patients' add patient to the database
+        if (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
             dbConAddPatient(currentPatient);
+
         } else {
-            throw new Exception("Patient already registered.");
+            System.out.println("Patient already registered.");
         }
     }
+
+
+
+    public static void modifyPatient(String inputCPR, Patient currentPatient) {
+        if ((inputCPR.equals(dbConFindPatient(inputCPR).getCPR())) &
+                (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR()))) {
+            dbConModifyPatient(inputCPR, currentPatient);
+
+        } else {
+            System.out.println("No such patient registered.");
+        }
+    }
+
 
 
     //Method removing patient from the pt list
-    public void removePatient(Patient currentPatient) throws Exception {
-        if (currentPatient == dbConFindPatient(currentPatient.getCPR())) {
-            dbConRemovePatient(currentPatient);
+    public static void removePatient(Patient currentPatient) {
+        if (dbConFindPatient(currentPatient.getCPR()) != null &&
+                currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+                dbConRemovePatient(currentPatient);
         } else {
-            throw new Exception("No such patient registered");
+                System.out.println("No such patient registered.");
+            }
         }
-    }
 
 
     // Method for printing current number of patients in list + their name and cpr
-    public void printPatients() {
+    public static void showAllPatients() {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
 
-        String query = "SELECT * FROM CoronaNet.Patient";
-        Patient currentPatient = null;
-
         try (Connection con = DriverManager.getConnection(url, null, password);
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) {
+             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Patient")) {
 
             while (rs.next()) {
                 String CPR = rs.getString(1);
@@ -116,7 +170,7 @@ public class PatientRegister {
                 String consent = rs.getString(6);
                 String clinic = rs.getString(7);
 
-                currentPatient = new Patient(CPR, firstName, lastName, mail, phoneNumber, consent, clinic);
+                Patient currentPatient = new Patient(CPR, firstName, lastName, mail, phoneNumber, consent, clinic);
                 System.out.println(currentPatient);
             }
 
