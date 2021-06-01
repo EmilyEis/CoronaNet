@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.Date;
+import java.sql.Time;
+
 public class Main extends Application {
 
     @Override
@@ -17,15 +20,15 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        Patient testPatient = new Patient("1234567897", "Janet", "Doe",
+    public static void main(String[] args) {
+        Patient testPatient = new Patient("1212997897", "Janet", "Doe",
                 null, null, "yes", "12345");
-        // PatientRegister.addPatient(testPatient);
-        PatientRegister.removePatient(testPatient);
-         //System.out.println((PatientRegister.findPatient(testPatient).getFirstName()));
-        //PatientRegister.findPatient(testPatient);
+        Test newTest = new Test(0, "1234567890","Negative", "B.1.1.6", Date.valueOf("2020-8-10"), Time.valueOf("20:32:50"));
 
+        System.out.println(testPatient.getAge());
+        PatientRegister.findPatient(testPatient);
+
+        //testPatient.setFirstName("Haley");
         //launch(args);
-
     }
 }

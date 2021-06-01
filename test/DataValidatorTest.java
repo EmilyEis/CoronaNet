@@ -206,7 +206,7 @@ class DataValidatorTest {
     @org.junit.jupiter.api.Test
     void isValidKnownTestValid() {
         DataValidator dv = new DataValidator();
-        Test input = TestRegister.dbConTest("1234567890");
+        Test input = TestRegister.dbConFindTest("1234567890");
 
         boolean result = dv.isValidKnownTest(input);
         Assertions.assertTrue(result);

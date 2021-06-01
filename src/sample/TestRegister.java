@@ -3,7 +3,7 @@ package sample;
 import java.sql.*;
 
 public class TestRegister {
-    public static Test dbConTest(String inputCPR) {
+    public static Test dbConFindTest(String inputCPR) {
         Test currentTest = null;
 
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
@@ -31,4 +31,45 @@ public class TestRegister {
         }
         return currentTest;
     }
+
+    public static void dbConAddTest(Test newTest) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
+
+        String update = "INSERT INTO CoronaNet.Test (testID, CPR, result, strain, date, time) VALUES ("
+                + "'" + newTest.getTestID() + "','" + newTest.getCPR() + "','" + newTest.getResult() + "','" +
+                newTest.getStrain() + "','" + newTest.getDate() + "','" + newTest.getTime() + "')";
+
+        try (Connection con = DriverManager.getConnection(url, null, password)) {
+            Statement st = con.createStatement();
+            st.executeUpdate(update);
+            System.out.println("Test successfully added.");
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+
+    private static void dbConModifyTest(String inputTestID, Test inputTest) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
+
+        String update = "UPDATE CoronaNet.Test SET CPR = " + "'" + inputTest.getCPR() + "'" + ", result = " +
+                "'" + inputTest.getResult() + "'" + ", strain = " + "'" + inputTest.getStrain() + "'"
+                + ", date = " + "'" + inputTest.getDate() + "'" + ", time = " + "'" + inputTest.getTime()
+                + "'" + " WHERE testID = " + "'" + inputTestID + "'";
+
+        try (Connection con = DriverManager.getConnection(url, null, password)) {
+            Statement st = con.createStatement();
+            int rs = st.executeUpdate(update);
+            System.out.println("Test successfully modified.");
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+
+
 }

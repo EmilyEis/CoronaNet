@@ -3,14 +3,13 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 public class Controller {
 
     @FXML private TextArea viewPatientInfo;
     @FXML private TextArea viewTests;
     @FXML private TextArea viewSensorGeo;
-    @FXML private TextField CPR;
+    @FXML private TextArea CPR;
 
     public void searchButtonClicked() {
         Patient searchResultPatient = PatientRegister.dbConFindPatient(CPR.getText());
@@ -19,7 +18,7 @@ public class Controller {
                 + searchResultPatient.getMail() + "\n" + "Phone: " + searchResultPatient.getPhoneNumber() + "\n" +
                 "Consent: " + searchResultPatient.getConsent());
 
-        Test searchResultTest = TestRegister.dbConTest(CPR.getText());
+        Test searchResultTest = TestRegister.dbConFindTest(CPR.getText());
         viewTests.setText("Test ID: " + searchResultTest.getTestID() + "\n" + "CPR: " + searchResultTest.getCPR() + "\n" +
                 "Result: " + searchResultTest.getResult() + "\n" + "Strain: " + searchResultTest.getStrain() + "\n" +
                 "Date & time: " + searchResultTest.getDate() + " " + searchResultTest.getTime());

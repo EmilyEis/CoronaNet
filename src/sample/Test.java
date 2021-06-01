@@ -3,7 +3,6 @@ package sample;
 import java.sql.*;
 
 public class Test {
-
     private int testID;
     private String CPR;
     private String result;
@@ -11,7 +10,7 @@ public class Test {
     private Date date;
     private Time time;
 
-    public Test (int inputTestID, String inputCPR, String inputResult, String inputStrain, Date inputDate, Time inputTime) {
+    public Test(int inputTestID, String inputCPR, String inputResult, String inputStrain, Date inputDate, Time inputTime) {
         this.testID = inputTestID;
         this.CPR = inputCPR;
         this.result = inputResult;
@@ -36,8 +35,8 @@ public class Test {
         return strain;
     }
 
-    public void setStrain(String strain) {
-        this.strain = strain;
+    public void setStrain(String newStrain) {
+        this.strain = newStrain;
     }
 
     public Date getDate() {

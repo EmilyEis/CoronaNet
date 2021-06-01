@@ -24,8 +24,6 @@ public class PatientRegister {
                 String clinic = rs.getString(7);
 
                 currentPatient = new Patient(CPR, firstName, lastName, mail, phoneNumber, consent, clinic);
-                //System.out.println(currentPatient.getCPR()+currentPatient.getFirstName()+currentPatient.getLastName()+
-                //        currentPatient.getPhoneNumber()+currentPatient.getMail()+currentPatient.getConsent()+currentPatient.getClinic());
             }
 
         } catch (SQLException ex) {
@@ -34,7 +32,6 @@ public class PatientRegister {
 
         return currentPatient;
     }
-
 
 
     private static void dbConAddPatient(Patient newPatient) {
@@ -47,16 +44,13 @@ public class PatientRegister {
                 newPatient.getClinic() + "')";
 
         try (Connection con = DriverManager.getConnection(url, null, password)) {
-             Statement st = con.createStatement();
-             st.executeUpdate(update);
-             System.out.println("Patient successfully added.");
-    }
-
-        catch (SQLException ex) {
+            Statement st = con.createStatement();
+            st.executeUpdate(update);
+            System.out.println("Patient successfully added.");
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
-
 
 
     private static void dbConRemovePatient(Patient inputPatient) {
@@ -69,13 +63,10 @@ public class PatientRegister {
             st.executeUpdate(update);
 
             System.out.println("Patient successfully removed.");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        catch(SQLException ex){
-                System.out.println(ex.getMessage());
-            }
-        }
-
+    }
 
 
     private static void dbConModifyPatient(String inputCPR, Patient inputPatient) {
@@ -97,59 +88,6 @@ public class PatientRegister {
             System.out.println(ex.getMessage());
         }
     }
-
-
-
-
-
-
-    public static Patient findPatient(Patient currentPatient) {
-
-        if (currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
-            System.out.println("got here.");
-            return dbConFindPatient(currentPatient.getCPR());
-
-        } else {
-            System.out.println("No patient found.");
-            return null;
-        }
-    }
-
-
-    // Method for checking if the patient already exists in the register
-    public static void addPatient(Patient currentPatient) {
-        // If current patient does not exist in the database 'patients' add patient to the database
-        if (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
-            dbConAddPatient(currentPatient);
-
-        } else {
-            System.out.println("Patient already registered.");
-        }
-    }
-
-
-
-    public static void modifyPatient(String inputCPR, Patient currentPatient) {
-        if ((inputCPR.equals(dbConFindPatient(inputCPR).getCPR())) &
-                (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR()))) {
-            dbConModifyPatient(inputCPR, currentPatient);
-
-        } else {
-            System.out.println("No such patient registered.");
-        }
-    }
-
-
-
-    //Method removing patient from the pt list
-    public static void removePatient(Patient currentPatient) {
-        if (dbConFindPatient(currentPatient.getCPR()) != null &&
-                currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
-                dbConRemovePatient(currentPatient);
-        } else {
-                System.out.println("No such patient registered.");
-            }
-        }
 
 
     // Method for printing current number of patients in list + their name and cpr
@@ -177,5 +115,106 @@ public class PatientRegister {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public static void findPatient(Patient currentPatient) {
+        if (dbConFindPatient(currentPatient.getCPR()) != null &&
+                currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+            dbConFindPatient(currentPatient.getCPR());
+
+        } else {
+            System.out.println("No patient found.");
+        }
+    }
+
+
+    // Method for checking if the patient already exists in the register
+    public static void addPatient(Patient currentPatient) {
+        // If current patient does not exist in the database 'patients' add patient to the database
+        if (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+            dbConAddPatient(currentPatient);
+
+        } else {
+            System.out.println("Patient already registered.");
+        }
+    }
+
+    //Method removing patient from the pt list
+    public static void removePatient(Patient currentPatient) {
+        if (dbConFindPatient(currentPatient.getCPR()) != null &&
+                currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+            dbConRemovePatient(currentPatient);
+        } else {
+            System.out.println("No such patient registered.");
+        }
+    }
+
+    // Modify the patient's info. CurrentPatient replaces the patient object which matches inputCPR
+    public static Patient modifyPatient(String inputCPR, Patient currentPatient) {
+        if (inputCPR.equals(dbConFindPatient(inputCPR).getCPR()) &&
+                (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR()))) {
+            return dbConFindPatient(currentPatient.getCPR());
+        } else {
+            System.out.println("No such patient registered.");
+            return null;
+        }
+    }
+
+
+    public static Patient modifyCPR(String newCPR, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(newCPR, currentPatient.getFirstName(),
+                currentPatient.getLastName(), currentPatient.getMail(), currentPatient.getPhoneNumber(),
+                currentPatient.getConsent(), currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyFirstName(String newFirstName, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), newFirstName,
+                currentPatient.getLastName(), currentPatient.getMail(),
+                currentPatient.getPhoneNumber(), currentPatient.getConsent(),
+                currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyLastName(String newLastName, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), currentPatient.getFirstName(),
+                newLastName, currentPatient.getMail(), currentPatient.getPhoneNumber(), currentPatient.getConsent(),
+                currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyPhoneNumber(String newPhoneNumber, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), currentPatient.getFirstName(),
+                currentPatient.getLastName(), currentPatient.getMail(), newPhoneNumber, currentPatient.getConsent(),
+                currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyMail(String newMail, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), currentPatient.getFirstName(),
+                currentPatient.getLastName(), newMail, currentPatient.getPhoneNumber(), currentPatient.getConsent(),
+                currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyConsent(String newConsent, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), currentPatient.getFirstName(),
+                currentPatient.getLastName(), currentPatient.getMail(), currentPatient.getPhoneNumber(), newConsent,
+                currentPatient.getClinic());
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Patient modifyClinic(String newClinic, Patient currentPatient) {
+        Patient modifiedPatient = new Patient(currentPatient.getCPR(), currentPatient.getFirstName(),
+                currentPatient.getLastName(), currentPatient.getMail(), currentPatient.getPhoneNumber(),
+                currentPatient.getConsent(), newClinic);
+
+        return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
     }
 }
