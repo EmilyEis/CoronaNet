@@ -89,6 +89,30 @@ public class PatientRegister {
         }
     }
 
+    private static Address dbConFindAddress(String inputCPR) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
+        Address currentAddress = null;
+
+        try (Connection con = DriverManager.getConnection(url, null, password);
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Address WHERE CPR = " + "'" + inputCPR + "'")) {
+
+            while (rs.next()) {
+                String street = rs.getString(2);
+                int zipCode = rs.getInt(3);
+                String city = rs.getString(4);
+
+                currentAddress = new Address(street, zipCode, city);
+
+            }
+            return currentAddress;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return currentAddress;
+    }
 
     // Method for printing current number of patients in list + their name and cpr
     public static void showAllPatients() {
@@ -127,7 +151,6 @@ public class PatientRegister {
         }
     }
 
-
     // Method for checking if the patient already exists in the register
     public static void addPatient(Patient currentPatient) {
         // If current patient does not exist in the database 'patients' add patient to the database
@@ -159,7 +182,6 @@ public class PatientRegister {
             return null;
         }
     }
-
 
     public static Patient modifyCPR(String newCPR, Patient currentPatient) {
         Patient modifiedPatient = new Patient(newCPR, currentPatient.getFirstName(),
@@ -216,5 +238,16 @@ public class PatientRegister {
                 currentPatient.getConsent(), newClinic);
 
         return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
+    }
+
+    public static Address findAddress(String inputCPR) {
+        if (dbConFindAddress(inputCPR) != null) {
+            return dbConFindAddress(inputCPR);
+        }
+
+        else {
+            System.out.println("No address registered to the CPR " + inputCPR);
+            return null;
+        }
     }
 }

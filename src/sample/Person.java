@@ -9,14 +9,17 @@ public class Person {
     private String CPR;
     private String firstName;
     private String lastName;
+    private String street;
+    private int zipCode;
+    private String city;
 
 
     public Person(String inputCPR, String inputFirstName, String inputLastName) {
         this.CPR = inputCPR;
         this.firstName = inputFirstName;
         this.lastName = inputLastName;
-    }
 
+    }
 
     // Getters and setters for first name, last name, cpr, phone number and mail
     public String getFirstName() {

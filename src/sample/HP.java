@@ -7,7 +7,7 @@ public class HP extends Person {
     private String clinic;
     private String user;
 
-    public HP (String inputCPR, String inputFirstName, String inputLastName, String inputClinic, String inputUser) {
+    public HP (String inputCPR, String inputFirstName, String inputLastName,  String inputClinic, String inputUser) {
         super(inputCPR, inputFirstName, inputLastName);
         this.clinic = inputClinic;
         this.user = inputUser;
