@@ -1,13 +1,14 @@
 package sample;
 
-public class HP {
+public class HP extends Person {
 
     // Setting attributes for the healthcare personnel.
     // Clinic refers to a number that is unique to said doctor's clinic.
     private String clinic;
     private String user;
 
-    public HP (String inputClinic, String inputUser) {
+    public HP (String inputCPR, String inputFirstName, String inputLastName, String inputClinic, String inputUser) {
+        super(inputCPR, inputFirstName, inputLastName);
         this.clinic = inputClinic;
         this.user = inputUser;
     }
