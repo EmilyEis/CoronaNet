@@ -3,6 +3,7 @@ package sample;
 import java.sql.*;
 
 public class TestRegister {
+
     public static Test dbConFindTest(String inputCPR) {
         Test currentTest = null;
 
@@ -22,6 +23,7 @@ public class TestRegister {
                 String strain = rs.getString(4);
                 Date date = rs.getDate(5);
                 Time time = rs.getTime(6);
+
 
                 currentTest = new Test(testID, CPR, result, strain, date, time);
             }
@@ -50,7 +52,6 @@ public class TestRegister {
         }
     }
 
-
     private static void dbConModifyTest(String inputTestID, Test inputTest) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
@@ -70,6 +71,19 @@ public class TestRegister {
         }
     }
 
+    public ResultSet findPositiveTests(int inputZipCode, Date startDate, Date endDate) {
+        String url = "jdbc:mysql://127.0.0.1:/?user=root";
+        String password = "1234";
 
+        try (Connection con = DriverManager.getConnection(url, null, password);
+             Statement st = con.createStatement();
+             ResultSet result = st.executeQuery("SELECT COUNT(*) FROM CoronaNet.Test WHERE result = 'Positive' AND " +
+                     "date >= " + "'" + startDate + "'" + "AND date <= " + "'" + endDate + "';")) {
+            return result;
 
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 }

@@ -33,7 +33,6 @@ public class PatientRegister {
         return currentPatient;
     }
 
-
     private static void dbConAddPatient(Patient newPatient) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
@@ -52,7 +51,6 @@ public class PatientRegister {
         }
     }
 
-
     private static void dbConRemovePatient(Patient inputPatient) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
@@ -67,7 +65,6 @@ public class PatientRegister {
             System.out.println(ex.getMessage());
         }
     }
-
 
     private static void dbConModifyPatient(String inputCPR, Patient inputPatient) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
@@ -89,14 +86,14 @@ public class PatientRegister {
         }
     }
 
-    private static Address dbConFindAddress(String inputCPR) {
+    private static Address dbConFindAddress(int inputID) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
         Address currentAddress = null;
 
         try (Connection con = DriverManager.getConnection(url, null, password);
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Address WHERE CPR = " + "'" + inputCPR + "'")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Address WHERE Person_idPerson = " + "'" + inputID + "'")) {
 
             while (rs.next()) {
                 String street = rs.getString(2);
@@ -240,13 +237,13 @@ public class PatientRegister {
         return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
     }
 
-    public static Address findAddress(String inputCPR) {
-        if (dbConFindAddress(inputCPR) != null) {
-            return dbConFindAddress(inputCPR);
+    public static Address findAddress(int inputID) {
+        if (dbConFindAddress(inputID) != null) {
+            return dbConFindAddress(inputID);
         }
 
         else {
-            System.out.println("No address registered to the CPR " + inputCPR);
+            System.out.println("No address registered to the ID " + inputID);
             return null;
         }
     }
