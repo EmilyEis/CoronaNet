@@ -1,6 +1,8 @@
 package sample;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TestRegister {
 
@@ -23,7 +25,6 @@ public class TestRegister {
                 String strain = rs.getString(4);
                 Date date = rs.getDate(5);
                 Time time = rs.getTime(6);
-
 
                 currentTest = new Test(testID, CPR, result, strain, date, time);
             }
@@ -71,19 +72,57 @@ public class TestRegister {
         }
     }
 
-    public ResultSet findPositiveTests(int inputZipCode, Date startDate, Date endDate) {
-        String url = "jdbc:mysql://127.0.0.1:/?user=root";
-        String password = "1234";
+    public static ArrayList<Integer> findPositiveTests(ArrayList <Integer> personList, Date startDate, Date endDate) {
+        int strainAlpha = 0; int strainBeta = 0; int strainGamma = 0; int strainDelta = 0; int strainEpsilon = 0;
+        int strainZeta = 0; int strainEta = 0; int strainTheta = 0; int strainIota = 0; int strainKappa = 0;
 
-        try (Connection con = DriverManager.getConnection(url, null, password);
-             Statement st = con.createStatement();
-             ResultSet result = st.executeQuery("SELECT COUNT(*) FROM CoronaNet.Test WHERE result = 'Positive' AND " +
-                     "date >= " + "'" + startDate + "'" + "AND date <= " + "'" + endDate + "';")) {
-            return result;
+        for (int i : personList) {
+            String url = "jdbc:mysql://127.0.0.1:/?user=root";
+            String password = "1234";
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
+            try (Connection con = DriverManager.getConnection(url, null, password);
+                 Statement st = con.createStatement();
+                 ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Test WHERE Patient_idPatient = " + "'" + i + "'"
+                         + "AND date >= " + "'" + startDate + "'" + "AND date <= " + "'" + endDate + "'" + " AND result = 'Positive';")) {
+
+                while (rs.next()) {
+                    if (rs.getInt(9) == 1) {
+                        strainAlpha += 1;
+                    }
+                    else if (rs.getInt(9) == 2) {
+                        strainBeta += 1;
+                    }
+                    else if (rs.getInt(9) == 3) {
+                        strainGamma += 1;
+                    }
+                    else if (rs.getInt(9) == 4) {
+                        strainDelta += 1;
+                    }
+                    else if (rs.getInt(9) == 5) {
+                        strainEpsilon += 1;
+                    }
+                    else if (rs.getInt(9) == 6) {
+                        strainZeta += 1;
+                    }
+                    else if (rs.getInt(9) == 7) {
+                        strainEta += 1;
+                    }
+                    else if (rs.getInt(9) == 8) {
+                        strainTheta += 1;
+                    }
+                    else if (rs.getInt(9) == 9) {
+                        strainIota += 1;
+                    }
+                    else if (rs.getInt(9) == 10) {
+                        strainKappa += 1;
+                    }
+
+            }
+            } catch(SQLException ex){
+                System.out.println(ex.getMessage());
+            }
         }
+        return new ArrayList<>(Arrays.asList(strainAlpha, strainBeta, strainGamma, strainDelta, strainEpsilon, strainZeta, strainEta, strainTheta, strainIota, strainKappa));
+
     }
 }

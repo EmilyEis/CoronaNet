@@ -1,5 +1,6 @@
 package sample;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class PatientRegister {
 
@@ -86,29 +87,23 @@ public class PatientRegister {
         }
     }
 
-    private static Address dbConFindAddress(int inputID) {
+    private static ArrayList<Integer> dbConAddressFindPerson(int inputZipCode) {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
-        Address currentAddress = null;
+        ArrayList <Integer> personList = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(url, null, password);
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Address WHERE Person_idPerson = " + "'" + inputID + "'")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM CoronaNet.Address WHERE zipCode = " + "'" + inputZipCode + "'")) {
 
             while (rs.next()) {
-                String street = rs.getString(2);
-                int zipCode = rs.getInt(3);
-                String city = rs.getString(4);
-
-                currentAddress = new Address(street, zipCode, city);
-
+                personList.add(rs.getInt(5));
             }
-            return currentAddress;
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return currentAddress;
+        return personList;
     }
 
     // Method for printing current number of patients in list + their name and cpr
@@ -237,14 +232,7 @@ public class PatientRegister {
         return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
     }
 
-    public static Address findAddress(int inputID) {
-        if (dbConFindAddress(inputID) != null) {
-            return dbConFindAddress(inputID);
-        }
-
-        else {
-            System.out.println("No address registered to the ID " + inputID);
-            return null;
-        }
+    public static ArrayList<Integer> findAddress(int inputZipCode) {
+        return dbConAddressFindPerson(inputZipCode);
     }
 }
