@@ -17,8 +17,8 @@
       <TextField fx:id="endDate" layoutX="160.0" layoutY="210.0" prefHeight="25.0" prefWidth="94.0" promptText="YYYY-MM-DD" />
       <TextField fx:id="startDate" layoutX="160.0" layoutY="165.0" prefHeight="25.0" prefWidth="94.0" promptText="YYYY-MM-DD" />
       <Text layoutX="96.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date from:" />
-      <Text layoutX="160.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zipcode:" />
-      <TextField fx:id="zipCode" layoutX="209.0" layoutY="121.0" prefHeight="25.0" prefWidth="45.0" promptText="0000" />
+      <Text layoutX="144.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zipcode:" />
+      <TextField fx:id="zipCode" layoutX="197.0" layoutY="121.0" prefHeight="27.0" prefWidth="57.0" promptText="0000" />
       <TabPane layoutX="330.0" layoutY="110.0" prefHeight="375.0" prefWidth="367.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Infection rate">

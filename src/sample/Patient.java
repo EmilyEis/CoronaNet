@@ -1,9 +1,5 @@
 package sample;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-
 public class Patient extends Person {
 
     private String mail;
@@ -11,10 +7,14 @@ public class Patient extends Person {
     private String consent;
     private String clinic;
 
+    public Patient(int inputIdPatient, String inputCPR, String inputFirstName, String inputLastName) {
+        super(inputIdPatient, inputCPR, inputFirstName, inputLastName);
+    }
+
     // Registering patient with valid CPR
-    public Patient(String inputCPR, String inputFirstName, String inputLastName, String inputMail, String inputPhone,
+    public Patient(int inputIdPatient, String inputCPR, String inputFirstName, String inputLastName, String inputMail, String inputPhone,
                    String inputConsent, String inputClinic) {
-        super(inputCPR, inputFirstName, inputLastName);
+        super(inputIdPatient, inputCPR, inputFirstName, inputLastName);
         this.mail = inputMail;
         this.phoneNumber = inputPhone;
         this.consent = inputConsent;
@@ -25,7 +25,7 @@ public class Patient extends Person {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String newPhoneNumber) {
+    public void setPhoneNumber(String newPhoneNumber) throws Exception {
         this.phoneNumber = PatientRegister.modifyPhoneNumber(newPhoneNumber, this).getPhoneNumber();
     }
 
@@ -33,7 +33,7 @@ public class Patient extends Person {
         return mail;
     }
 
-    public void setMail(String newMail) {
+    public void setMail(String newMail) throws Exception {
         this.mail = PatientRegister.modifyMail(newMail, this).getMail();
     }
 
@@ -41,7 +41,7 @@ public class Patient extends Person {
         return consent;
     }
 
-    public void setConsent(String newConsent) {
+    public void setConsent(String newConsent) throws Exception {
         this.consent = PatientRegister.modifyConsent(newConsent, this).getConsent();
     }
 
@@ -49,7 +49,7 @@ public class Patient extends Person {
         return clinic;
     }
 
-    public void setClinic(String newClinic) {
+    public void setClinic(String newClinic) throws Exception {
         this.clinic = PatientRegister.modifyClinic(newClinic,this).getClinic();
     }
 

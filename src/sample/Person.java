@@ -6,27 +6,27 @@ import java.time.format.DateTimeFormatter;
 
 public class Person {
     // Creating fields/attributes for name/cpr
+    private int idPerson;
     private String CPR;
     private String firstName;
     private String lastName;
-    private String street;
-    private int zipCode;
-    private String city;
 
-
-    public Person(String inputCPR, String inputFirstName, String inputLastName) {
+    public Person(int inputIdPerson, String inputCPR, String inputFirstName, String inputLastName) {
+        this.idPerson = inputIdPerson;
         this.CPR = inputCPR;
         this.firstName = inputFirstName;
         this.lastName = inputLastName;
-
     }
 
-    // Getters and setters for first name, last name, cpr, phone number and mail
+    public int getIdPerson() {
+        return idPerson;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String newFirstName) {
+    public void setFirstName(String newFirstName) throws Exception {
         this.firstName = PatientRegister.modifyFirstName(newFirstName, (Patient) this).getFirstName();
     }
 
@@ -34,7 +34,7 @@ public class Person {
         return lastName;
     }
 
-    public void setLastName(String newLastName) {
+    public void setLastName(String newLastName) throws Exception {
         this.lastName = PatientRegister.modifyLastName(newLastName, (Patient) this).getLastName();
     }
 
@@ -42,7 +42,7 @@ public class Person {
         return CPR;
     }
 
-    public void setCPR(String newCPR) {
+    public void setCPR(String newCPR) throws Exception {
         this.CPR = PatientRegister.modifyCPR(newCPR, (Patient) this).getCPR();
     }
 
@@ -59,11 +59,11 @@ public class Person {
 
     // If the last number in CPR is even, the person's female. Otherwise he's male.
     public String getGender() {
-        String serial = getCPR().substring(7, 11);
+        String serial = getCPR().substring(7, 10);
         if (Integer.parseInt(serial) % 2 == 0) {
-            return "female";
+            return "F";
         } else {
-            return "male";
+            return "M";
         }
     }
 

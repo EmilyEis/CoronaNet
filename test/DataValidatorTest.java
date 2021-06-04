@@ -154,6 +154,7 @@ class DataValidatorTest {
     @org.junit.jupiter.api.Test
     void isValidPatientValid() {
         DataValidator dv = new DataValidator();
+        int idPerson = 1;
         String cpr = "1234567899";
         String firstName = "John";
         String lastName = "Doe";
@@ -162,7 +163,7 @@ class DataValidatorTest {
         String consent = "No";
         String clinic = "00000";
 
-        Patient input = new Patient(cpr, firstName, lastName, phone, mail, consent, clinic);
+        Patient input = new Patient(idPerson, cpr, firstName, lastName, phone, mail, consent, clinic);
         boolean result = dv.isValidPatient(input);
         Assertions.assertTrue(result);
     }
@@ -170,6 +171,7 @@ class DataValidatorTest {
     @org.junit.jupiter.api.Test
     void isValidPatientNotValid() {
         DataValidator dv = new DataValidator();
+        int idPerson = 2;
         String cpr = null;
         String firstName = "John";
         String lastName = "Doe";
@@ -178,13 +180,13 @@ class DataValidatorTest {
         String consent = "No";
         String clinic = "00000";
 
-        Patient input = new Patient(cpr, firstName, lastName, phone, mail, consent, clinic);
+        Patient input = new Patient(idPerson, cpr, firstName, lastName, phone, mail, consent, clinic);
         boolean result = dv.isValidPatient(input);
         Assertions.assertFalse(result);
     }
 
     @org.junit.jupiter.api.Test
-    void isValidKnownPatientValid() {
+    void isValidKnownPatientValid() throws Exception {
         DataValidator dv = new DataValidator();
         Patient input = PatientRegister.dbConFindPatient("1234567890");
 
@@ -194,7 +196,7 @@ class DataValidatorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void isValidKnownPatientNotValid() {
+    void isValidKnownPatientNotValid() throws Exception {
         DataValidator dv = new DataValidator();
         Patient input = PatientRegister.dbConFindPatient("1234567891");
 
@@ -206,7 +208,8 @@ class DataValidatorTest {
     @org.junit.jupiter.api.Test
     void isValidKnownTestValid() {
         DataValidator dv = new DataValidator();
-        Test input = TestRegister.dbConFindTest("1234567890");
+        int inputIdPatient = PatientRegister.dbConFindPatient("1234567890").getIdPerson();
+        Test input = TestRegister.dbConFindTest(inputIdPatient);
 
         boolean result = dv.isValidKnownTest(input);
         Assertions.assertTrue(result);

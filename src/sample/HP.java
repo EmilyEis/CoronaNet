@@ -6,11 +6,13 @@ public class HP extends Person {
     // Clinic refers to a number that is unique to said doctor's clinic.
     private String clinic;
     private String user;
+    private int idHP;
 
-    public HP (String inputCPR, String inputFirstName, String inputLastName,  String inputClinic, String inputUser) {
-        super(inputCPR, inputFirstName, inputLastName);
+    public HP (int inputIdPerson, String inputCPR, String inputFirstName, String inputLastName,  String inputClinic, String inputUser, int inputIdHP) {
+        super(inputIdPerson, inputCPR, inputFirstName, inputLastName);
         this.clinic = inputClinic;
         this.user = inputUser;
+        this.idHP = inputIdHP;
     }
 
     public String getClinic() {
@@ -29,6 +31,9 @@ public class HP extends Person {
         this.user = newUser;
     }
 
+    public int getIdHP() {
+        return idHP;
+    }
 
 
 
