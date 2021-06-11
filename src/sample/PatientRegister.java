@@ -12,7 +12,7 @@ public class PatientRegister {
 
         String query = "SELECT CoronaNet.Person.*, CoronaNet.Patient.* FROM CoronaNet.Person INNER JOIN CoronaNet.Patient " +
                 "ON CoronaNet.Person.idPerson = " +
-                "CoronaNet.Patient.Person_idPerson WHERE CoronaNet.Person.CPR = " + "'" + inputCPR + "'";
+                "CoronaNet.Patient.idPatient WHERE CoronaNet.Person.CPR = " + "'" + inputCPR + "'";
 
         try (Connection con = DriverManager.getConnection(url, null, password);
              Statement st = con.createStatement();
@@ -29,13 +29,14 @@ public class PatientRegister {
                 String clinic = rs.getString(11);
 
                 currentPatient = new Patient(idPatient, CPR, firstName, lastName, mail, phone, consent, clinic);
-                return currentPatient;
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return currentPatient;
 
-        } return currentPatient;
+        }
+        return currentPatient;
     }
 
     public static void dbConAddPatient(Patient newPatient) {
@@ -77,16 +78,29 @@ public class PatientRegister {
         String url = "jdbc:mysql://127.0.0.1:/?user=root";
         String password = "1234";
 
-        String query = "UPDATE CoronaNet.Patient SET CPR = " + "'" + inputPatient.getCPR() + "'" + ", firstName = " +
-                "'" + inputPatient.getFirstName() + "'" + ", lastName = " + "'" + inputPatient.getLastName() + "'"
-                + ", mail = " + "'" + inputPatient.getMail() + "'" + ", phone = " + "'" + inputPatient.getPhoneNumber()
-                + "'" + ", consent = " + "'" + inputPatient.getConsent() + "'" + ", clinic = " + "'" +
-                inputPatient.getClinic() + "'" + " WHERE CPR = " + "'" + inputCPR + "'";
+        String update1 = "UPDATE CoronaNet.Person " +
+                "INNER JOIN CoronaNet.Patient " +
+                "ON CoronaNet.Person.idPerson = CoronaNet.Patient.idPatient " +
+                "SET " +
+                "Person.CPR = '" + inputPatient.getCPR() +
+                "', Person.firstName = '" + inputPatient.getFirstName() +
+                "', Person.lastName = '"  + inputPatient.getLastName() +
+                "' WHERE Person.CPR = '" + inputCPR + "'";
+
+        String update2 = "UPDATE CoronaNet.Patient " +
+                "INNER JOIN CoronaNet.Person " +
+                "ON CoronaNet.Person.idPerson = CoronaNet.Patient.idPatient " +
+                "SET " +
+                "Patient.mail = '" + inputPatient.getMail() +
+                "', Patient.phone = '" + inputPatient.getPhoneNumber() +
+                "', Patient.consent = '" + inputPatient.getConsent() +
+                "', Patient.clinic = '" + inputPatient.getClinic() +
+                "' WHERE Person.CPR = '" + inputCPR + "'";
 
         try (Connection con = DriverManager.getConnection(url, null, password)) {
             Statement st = con.createStatement();
-            int rs = st.executeUpdate(query);
-            System.out.println(rs);
+            st.executeUpdate(update1);
+            st.executeUpdate(update2);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -119,13 +133,14 @@ public class PatientRegister {
         return personList;
     }
 
-    public static void findPatient(Patient currentPatient) {
+    public static boolean findPatient(Patient currentPatient) {
         if (dbConFindPatient(currentPatient.getCPR()) != null &&
                 currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
-            dbConFindPatient(currentPatient.getCPR());
+            return true;
 
         } else {
             System.out.println("No patient found.");
+            return false;
         }
     }
 
@@ -133,7 +148,7 @@ public class PatientRegister {
     public static void addPatient(Patient currentPatient) {
 
         // If current patient does not exist in the database 'patients' add patient to the database
-        if (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
+        if (!findPatient(currentPatient)) {
             dbConAddPatient(currentPatient);
         }
         else {
@@ -153,14 +168,17 @@ public class PatientRegister {
 
     // Modify the patient's info. CurrentPatient replaces the patient object which matches inputCPR
     public static Patient modifyPatient(String inputCPR, Patient currentPatient) {
-        if (inputCPR.equals(dbConFindPatient(inputCPR).getCPR()) &&
-                (!currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR()))) {
+        if (!findPatient(currentPatient) && findPatient(dbConFindPatient(inputCPR))) {
+            dbConModifyPatient(inputCPR, currentPatient);
+            System.out.println("Patient successfully modified.");
             return dbConFindPatient(currentPatient.getCPR());
+
         } else {
-            System.out.println("No such patient registered.");
+            System.out.println("Patient could not be modified.");
             return null;
         }
     }
+
 
     public static Patient modifyCPR(String newCPR, Patient currentPatient) {
         Patient modifiedPatient = new Patient(currentPatient.getIdPerson(), newCPR, currentPatient.getFirstName(),
@@ -218,6 +236,7 @@ public class PatientRegister {
 
         return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
     }
+
 
     public static ArrayList<Integer> findAddress(int inputZipCode) {
         return dbConAddressFindPerson(inputZipCode);

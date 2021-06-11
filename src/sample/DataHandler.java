@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 @XmlRootElement
-public class Controller {
+public class DataHandler {
 
     @FXML
     private TextField zipCode;
@@ -30,7 +30,7 @@ public class Controller {
     @FXML
     private TextArea viewSensorGeo;
     @FXML
-    private TextArea CPR;
+    private TextField CPR;
     @FXML
     private TextArea infectionRate;
     @FXML
@@ -67,28 +67,35 @@ public class Controller {
         infectionRate.setText(searchResultString);
 
         JAXBElement<String> jaxbElement = new JAXBElement(new QName("root-element"), String.class, searchResultString);
-        Main.infectionRateToXML("searchResult.xml", jaxbElement);
+        CoronaNet.infectionRateToXML("searchResult.xml", jaxbElement);
     }
 
     public void searchButtonClicked() {
-        Patient searchResultPatient = PatientRegister.dbConFindPatient(CPR.getText());
-        viewPatientInfo.setText("CPR: " + searchResultPatient.getCPR() + "\n" + "Name: " +
-                searchResultPatient.getFirstName() + " " + searchResultPatient.getLastName() + "\n" + "Mail: "
-                + searchResultPatient.getMail() + "\n" + "Phone: " + searchResultPatient.getPhoneNumber() + "\n" +
-                "Consent: " + searchResultPatient.getConsent());
+        try {
+            if (PatientRegister.findPatient(PatientRegister.dbConFindPatient(CPR.getText()))) {
+                Patient searchResultPatient = PatientRegister.dbConFindPatient(CPR.getText());
+                viewPatientInfo.setText("CPR: " + searchResultPatient.getCPR() + "\n" + "Name: " +
+                        searchResultPatient.getFirstName() + " " + searchResultPatient.getLastName() + "\n" + "Mail: "
+                        + searchResultPatient.getMail() + "\n" + "Phone: " + searchResultPatient.getPhoneNumber() + "\n" +
+                        "Consent: " + searchResultPatient.getConsent());
 
-        Test searchResultTest = TestRegister.dbConFindTest((searchResultPatient.getIdPerson()));
-        viewTests.setText("Test ID: " + searchResultTest.getTestID() + "\n" + "CPR: " + searchResultPatient.getCPR() + "\n" +
-                "Result: " + searchResultTest.getResult() + "\n" + "Strain: " + searchResultTest.getStrain() + "\n" +
-                "Date & time: " + searchResultTest.getDate() + " " + searchResultTest.getTime());
+                Test searchResultTest = TestRegister.dbConFindTest((searchResultPatient.getIdPerson()));
+                viewTests.setText("Test ID: " + searchResultTest.getTestID() + "\n" + "CPR: " + searchResultPatient.getCPR() + "\n" +
+                        "Result: " + searchResultTest.getResult() + "\n" + "Strain: " + searchResultTest.getStrain() + "\n" +
+                        "Date & time: " + searchResultTest.getDate() + " " + searchResultTest.getTime());
 
-        viewSensorGeo.setText("""
-                Blood pressure: 140/70
-                Pulse: 80bpm
-                Saturation: 99%
-                Temperature: 37,5C
-                EKG: normal
-                Last geographical location (zip code): 2100""");
+                viewSensorGeo.setText("""
+                        Blood pressure: 140/70
+                        Pulse: 80bpm
+                        Saturation: 99%
+                        Temperature: 37,5C
+                        EKG: normal
+                        Last geographical location (zip code): 2100""");
+            }
+        }
+        catch (Exception ex) {
+            viewPatientInfo.setText("No such patient found.");
+        }
     }
 
     public void healthcareButtonClicked() {

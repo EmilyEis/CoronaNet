@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DataHandler">
    <children>
       <Button layoutX="81.0" layoutY="402.0" mnemonicParsing="false" onAction="#searchVirusTrendsButtonClicked" prefHeight="47.0" prefWidth="71.0" text="Search" />
       <Text layoutX="292.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoronaNet">
