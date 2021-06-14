@@ -12,6 +12,7 @@ import java.io.File;
 
 public class CoronaNet extends Application {
 
+    // The following starts the primary stage from which the user can choose a login.
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("CoronaNet.fxml"));

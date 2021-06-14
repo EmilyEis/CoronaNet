@@ -176,7 +176,6 @@ public class PatientRegister {
         }
     }
 
-
     public static Patient modifyCPR(String newCPR, Patient currentPatient) {
         Patient modifiedPatient = new Patient(currentPatient.getIdPerson(), newCPR, currentPatient.getFirstName(),
                 currentPatient.getLastName(), currentPatient.getMail(), currentPatient.getPhoneNumber(),

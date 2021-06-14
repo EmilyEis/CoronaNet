@@ -90,6 +90,7 @@ public class TestRegister {
         String password = "1234";
         Set<Integer> uniqueList = new HashSet<>(personList);
 
+        // For every unique person in the list, check if a positive test is found in the given date range.
         for (int i : uniqueList) {
             System.out.println(i);
             try (Connection con = DriverManager.getConnection(url, null, password);
@@ -104,6 +105,7 @@ public class TestRegister {
 
                 while (rs.next()) {
 
+                    // If consent = yes, the zip code from the geolocation is used. Otherwise the address is used.
                     String consent = rs.getString(4);
                     Statement st1 = con.createStatement();
                     if (consent.equals("yes")) {

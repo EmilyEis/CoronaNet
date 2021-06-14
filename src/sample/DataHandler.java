@@ -45,6 +45,8 @@ public class DataHandler {
     private NumberAxis y;
 
     public void searchVirusTrendsButtonClicked() throws Exception {
+        // If the input zip code is valid, move on to next section.
+        // If input, zip code or date is invalid, the user is notified.
         if (DataValidator.isValidZipCode(zipCode.getText())) {
             try {
                 ArrayList<Integer> searchResult = TestRegister.findPositiveTests(
@@ -85,6 +87,7 @@ public class DataHandler {
 
     public void searchButtonClicked() {
         try {
+            // if a valid patient matches the input CPR, patient information is displayed. Otherwise, an error is displayed.
             if (PatientRegister.findPatient(PatientRegister.dbConFindPatient(CPR.getText()))) {
                 Patient searchResultPatient = PatientRegister.dbConFindPatient(CPR.getText());
                 viewPatientInfo.setText("CPR: " + searchResultPatient.getCPR() + "\n" + "Name: " +
@@ -92,12 +95,10 @@ public class DataHandler {
                         + searchResultPatient.getMail() + "\n" + "Phone: " + searchResultPatient.getPhoneNumber() + "\n" +
                         "Consent: " + searchResultPatient.getConsent());
 
-
                 Test searchResultTest = TestRegister.dbConFindTest((searchResultPatient.getIdPerson()));
                 viewTests.setText("Test ID: " + searchResultTest.getTestID() + "\n" + "CPR: " + searchResultPatient.getCPR() + "\n" +
                         "Result: " + searchResultTest.getResult() + "\n" + "Strain: " + searchResultTest.getStrain() + "\n" +
                         "Date & time: " + searchResultTest.getDate() + " " + searchResultTest.getTime());
-
 
                 viewSensorGeo.setText("""
                         Blood pressure: 140/70
