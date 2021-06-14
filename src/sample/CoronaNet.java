@@ -8,21 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class CoronaNet extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Healthcare.fxml"));
-        primaryStage.setTitle("Logged in as healthcare personnel");
+        Parent root = FXMLLoader.load(getClass().getResource("CoronaNet.fxml"));
+        primaryStage.setTitle("CoronaNet");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        /*Patient testPatient = new Patient(0, "2806992324", "Thomas",
+    public static void main(String[] args) throws Exception {
+        /*Patient testPatient = new Patient(49, "2806992324", "Thomas",
                 "Hendricks", null, null, "no", "0000");
         Patient testPatient1 = new Patient(0, "1212120102", "Elisa",
                 "Martins");
@@ -31,19 +30,16 @@ public class CoronaNet extends Application {
         PatientRegister.findPatient(testPatient1);
 
         TestRegister.dbConAddTest(new Test(100,"Negative",null, Date.valueOf("2020-06-28"),
-                Time.valueOf("13:12:12"),14,0,0));
+               Time.valueOf("13:12:12"),14,0,0));
         Virus virus = new Virus("virus");
         virus.addVirus(virus.getStrain());
         virus.setStrain("NO");
         virus.removeVirus("NO");
-
-        PatientRegister.addPatient(testPatient);
-        PatientRegister.addPatient(testPatient2);
-        PatientRegister.modifyPatient("2806992323", testPatient1);*/
+        PatientRegister.removePatient(testPatient1); */
         launch(args);
-
     }
 
+    // XML file writers
     private static void testToXML(String filename, Test test) throws Exception {
         File file = new File(filename);
         JAXBContext jaxbContext = JAXBContext.newInstance(Test.class);
@@ -56,7 +52,18 @@ public class CoronaNet extends Application {
         jaxbMarshaller.marshal(test, System.out);
     }
 
-    // XML file-writer
+    private static void patientToXML(String filename, Patient patient) throws Exception {
+        File file = new File(filename);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
+
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+        jaxbMarshaller.marshal(patient, file);
+        jaxbMarshaller.marshal(patient, System.out);
+    }
+
     public static void infectionRateToXML(String filename, JAXBElement<String> infectionRate) throws Exception {
         File file = new File(filename);
         JAXBContext jaxbContext = JAXBContext.newInstance(JAXBElement.class);

@@ -49,7 +49,7 @@ public class DataValidator {
     }
 
     public boolean isValidConsent (String consent) {
-        return consent.equals("Yes") || consent.equals("No");
+        return consent.equals("yes") || consent.equals("no");
     }
 
     public boolean isValidClinic (String clinic) {

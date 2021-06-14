@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<test>
+    <testID>0</testID>
+    <CPR>1234567890</CPR>
+    <result>Negative</result>
+    <strain>B.1.1.6</strain>
+    <date/>
+    <time/>
+</test>

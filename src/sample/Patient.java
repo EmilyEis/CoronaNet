@@ -1,6 +1,18 @@
 package sample;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement(name = "Patient")
+@XmlType(propOrder={"mail", "phoneNumber", "consent", "clinic"})
+
 public class Patient extends Person {
+    public Patient() {
+        super();
+        this.mail = null;
+        this.phoneNumber = null;
+        this.consent = null;
+        this.clinic = null;
+    }
 
     private String mail;
     private String phoneNumber;
@@ -21,6 +33,7 @@ public class Patient extends Person {
         this.clinic = inputClinic;
     }
 
+    @XmlElement(name = "phoneNumber")
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -29,6 +42,7 @@ public class Patient extends Person {
         this.phoneNumber = PatientRegister.modifyPhoneNumber(newPhoneNumber, this).getPhoneNumber();
     }
 
+    @XmlElement(name = "mail")
     public String getMail() {
         return mail;
     }
@@ -37,6 +51,7 @@ public class Patient extends Person {
         this.mail = PatientRegister.modifyMail(newMail, this).getMail();
     }
 
+    @XmlElement(name = "consent")
     public String getConsent() {
         return consent;
     }
@@ -45,12 +60,22 @@ public class Patient extends Person {
         this.consent = PatientRegister.modifyConsent(newConsent, this).getConsent();
     }
 
+    @XmlElement(name = "clinic")
     public String getClinic() {
         return clinic;
     }
 
     public void setClinic(String newClinic) throws Exception {
         this.clinic = PatientRegister.modifyClinic(newClinic,this).getClinic();
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "idPerson='" + getIdPerson() + '\'' + ", CPR=" + getCPR() + ", firstName=" + getFirstName() +
+                ", lastName=" + getLastName() + ", mail=" + mail + ", phoneNumber=" + phoneNumber +
+                ", consent=" + consent +", clinic=" + clinic +'}';
+
     }
 
 

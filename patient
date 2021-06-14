@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient>
+    <idPerson>49</idPerson>
+    <CPR>2806992324</CPR>
+    <firstName>Thomas</firstName>
+    <lastName>Hendricks</lastName>
+    <consent>no</consent>
+    <clinic>0000</clinic>
+</Patient>

@@ -1,8 +1,15 @@
 package sample;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+
+@XmlRootElement(name = "Person")
+@XmlType(propOrder={"idPerson", "CPR", "firstName", "lastName"})
 
 public class Person {
     // Creating fields/attributes for name/cpr
@@ -11,6 +18,13 @@ public class Person {
     private String firstName;
     private String lastName;
 
+    public Person() {
+        this.idPerson = Integer.parseInt(null);
+        this.CPR = null;
+        this.firstName = null;
+        this.lastName = null;
+    }
+
     public Person(int inputIdPerson, String inputCPR, String inputFirstName, String inputLastName) {
         this.idPerson = inputIdPerson;
         this.CPR = inputCPR;
@@ -18,10 +32,12 @@ public class Person {
         this.lastName = inputLastName;
     }
 
+    @XmlElement(name = "idPerson")
     public int getIdPerson() {
         return idPerson;
     }
 
+    @XmlElement(name = "firstName")
     public String getFirstName() {
         return firstName;
     }
@@ -30,6 +46,7 @@ public class Person {
         this.firstName = PatientRegister.modifyFirstName(newFirstName, (Patient) this).getFirstName();
     }
 
+    @XmlElement(name = "lastName")
     public String getLastName() {
         return lastName;
     }
@@ -38,6 +55,7 @@ public class Person {
         this.lastName = PatientRegister.modifyLastName(newLastName, (Patient) this).getLastName();
     }
 
+    @XmlElement(name = "CPR")
     public String getCPR() {
         return CPR;
     }

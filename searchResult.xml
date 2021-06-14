@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<root-element>Zip code: 2100
+<root-element>Zip code: 2610
 Date range: 2020-01-01 to 2022-01-01
-Number of positive test cases: 3
+Number of positive test cases: 1
 
 Distribution of mutations (strains defined by WHO):
-Alpha = 1
+Alpha = 0
 Beta = 1
 Gamma = 0
 Delta = 0
-Epsilon = 1
+Epsilon = 0
 Zeta = 0
 Eta = 0
 Theta = 0

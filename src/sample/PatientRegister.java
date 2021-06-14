@@ -6,37 +6,36 @@ import java.util.ArrayList;
 public class PatientRegister {
 
     public static Patient dbConFindPatient(String inputCPR) {
-        String url = "jdbc:mysql://127.0.0.1:/?user=root";
-        String password = "1234";
-        Patient currentPatient = null;
+            Patient currentPatient = null;
+            String url = "jdbc:mysql://127.0.0.1:/?user=root";
+            String password = "1234";
 
-        String query = "SELECT CoronaNet.Person.*, CoronaNet.Patient.* FROM CoronaNet.Person INNER JOIN CoronaNet.Patient " +
-                "ON CoronaNet.Person.idPerson = " +
-                "CoronaNet.Patient.idPatient WHERE CoronaNet.Person.CPR = " + "'" + inputCPR + "'";
+            String query = "SELECT CoronaNet.Person.*, CoronaNet.Patient.* FROM CoronaNet.Person INNER JOIN CoronaNet.Patient " +
+                    "ON CoronaNet.Person.idPerson = " +
+                    "CoronaNet.Patient.idPatient WHERE CoronaNet.Person.CPR = " + "'" + inputCPR + "'";
 
-        try (Connection con = DriverManager.getConnection(url, null, password);
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) {
+            try (Connection con = DriverManager.getConnection(url, null, password);
+                 Statement st = con.createStatement();
+                 ResultSet rs = st.executeQuery(query)) {
 
-            while (rs.next()) {
-                int idPatient = rs.getInt(1);
-                String CPR = rs.getString(2);
-                String firstName = rs.getString(3);
-                String lastName = rs.getString(4);
-                String mail = rs.getString(8);
-                String phone = rs.getString(9);
-                String consent = rs.getString(10);
-                String clinic = rs.getString(11);
+                while (rs.next()) {
+                    int idPatient = rs.getInt(1);
+                    String CPR = rs.getString(2);
+                    String firstName = rs.getString(3);
+                    String lastName = rs.getString(4);
+                    String mail = rs.getString(8);
+                    String phone = rs.getString(9);
+                    String consent = rs.getString(10);
+                    String clinic = rs.getString(11);
 
-                currentPatient = new Patient(idPatient, CPR, firstName, lastName, mail, phone, consent, clinic);
-            }
+                    currentPatient = new Patient(idPatient, CPR, firstName, lastName, mail, phone, consent, clinic);
+                }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return currentPatient;
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                return currentPatient;
 
-        }
-        return currentPatient;
+        } return currentPatient;
     }
 
     public static void dbConAddPatient(Patient newPatient) {
@@ -161,8 +160,6 @@ public class PatientRegister {
         if (dbConFindPatient(currentPatient.getCPR()) != null &&
                 currentPatient.getCPR().equals(dbConFindPatient(currentPatient.getCPR()).getCPR())) {
             dbConRemovePatient(currentPatient);
-        } else {
-            System.out.println("No such patient registered.");
         }
     }
 
@@ -236,7 +233,6 @@ public class PatientRegister {
 
         return modifyPatient(modifiedPatient.getCPR(), modifiedPatient);
     }
-
 
     public static ArrayList<Integer> findAddress(int inputZipCode) {
         return dbConAddressFindPerson(inputZipCode);
