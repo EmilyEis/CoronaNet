@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DataHandler">
+   <children>
+      <Button layoutX="81.0" layoutY="402.0" mnemonicParsing="false" onAction="#searchVirusTrendsButtonClicked" prefHeight="47.0" prefWidth="71.0" text="Search" />
+      <Text layoutX="292.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoronaNet">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Text layoutX="139.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to:" />
+      <TextField fx:id="endDate" layoutX="160.0" layoutY="210.0" prefHeight="25.0" prefWidth="94.0" promptText="YYYY-MM-DD" />
+      <TextField fx:id="startDate" layoutX="160.0" layoutY="165.0" prefHeight="25.0" prefWidth="94.0" promptText="YYYY-MM-DD" />
+      <Text layoutX="96.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date from:" />
+      <Text layoutX="144.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zipcode:" />
+      <TextField fx:id="zipCode" layoutX="197.0" layoutY="121.0" prefHeight="27.0" prefWidth="57.0" promptText="0000" />
+      <TabPane layoutX="330.0" layoutY="110.0" prefHeight="375.0" prefWidth="367.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Infection rate">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="infectionRate" layoutX="6.0" layoutY="6.0" prefHeight="331.0" prefWidth="352.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Growth trend">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                         <BarChart fx:id="virusChart" prefHeight="346.0" prefWidth="367.0" title="Virus distribution">
+                                 <xAxis>
+                                         <CategoryAxis label="Mutation" side="BOTTOM" fx:id="x" />
+                                 </xAxis>
+                         <yAxis>
+                         <NumberAxis fx:id="y" label="Incidens" side="LEFT" />
+                         </yAxis>
+                         </BarChart>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+       <MenuButton layoutX="160.0" layoutY="298.0" mnemonicParsing="false" text="Virus strain">
+           <items>
+               <MenuItem mnemonicParsing="false" text="Alpha" />
+               <MenuItem mnemonicParsing="false" text="Beta" />
+               <MenuItem mnemonicParsing="false" text="Gamma" />
+               <MenuItem mnemonicParsing="false" text="Delta" />
+               <MenuItem mnemonicParsing="false" text="Epsilon" />
+               <MenuItem mnemonicParsing="false" text="Zeta" />
+               <MenuItem mnemonicParsing="false" text="Eta" />
+               <MenuItem mnemonicParsing="false" text="Theta" />
+               <MenuItem mnemonicParsing="false" text="Iota" />
+               <MenuItem mnemonicParsing="false" text="Kappa" />
+           </items>
+       </MenuButton>
+   </children>
+</AnchorPane>

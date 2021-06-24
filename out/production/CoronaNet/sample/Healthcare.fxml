@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<GridPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DataHandler">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="106.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="0.0" prefWidth="130.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="190.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="132.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="108.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="248.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <TextFlow prefHeight="51.0" prefWidth="418.0" textAlignment="CENTER" GridPane.columnIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoronaNet">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
+      </TextFlow>
+      <TextField fx:id="CPR" promptText="Search CPR" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#searchButtonClicked" text="Search" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="15.0" />
+         </GridPane.margin>
+      </Button>
+      <Accordion prefHeight="163.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.valignment="CENTER">
+        <panes>
+          <TitledPane animated="false" prefHeight="236.0" prefWidth="452.0" text="View patient information" textAlignment="CENTER">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="viewPatientInfo" editable="false" layoutX="-106.0" layoutY="-4.0" prefHeight="243.0" prefWidth="450.0" text="&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="View corona tests" textAlignment="CENTER">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="viewTests" editable="false" layoutX="-107.0" prefHeight="243.0" prefWidth="450.0" text="&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="View sensor data and geo locations">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="viewSensorGeo" editable="false" layoutX="-109.0" prefHeight="243.0" prefWidth="450.0" text="&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</GridPane>
