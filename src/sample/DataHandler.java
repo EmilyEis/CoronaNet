@@ -81,7 +81,7 @@ public class DataHandler {
                     infectionRate.setText("Please input a correct date.");
                 }
         } else {
-            infectionRate.setText("Please input numbers only in zip code.");
+            infectionRate.setText("Please input a valid zip code.");
         }
     }
 
